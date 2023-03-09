@@ -1,0 +1,15 @@
+[package]
+name = "alloy"
+version = "0.1.0"
+description = "The alloy kernel"
+authors = ["jorun <contact@jorun.dev>"]
+edition = "2021"
+
+[workspace]
+members = [
+	"bootcore"
+]
+
+[features]
+x86 = []
+i386 = ["x86"]

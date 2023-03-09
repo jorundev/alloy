@@ -1,0 +1,19 @@
+[package]
+name = "bootcore"
+version = "0.1.0"
+description = "Boot module of the alloy kernel"
+authors = ["jorun <contact@jorun.dev>"]
+edition = "2021"
+
+[lib]
+crate-type = ["staticlib"]
+name = "bootcore"
+
+[features]
+x86 = []
+i386 = ["x86"]
+multiboot2 = ["x86", "dep:multiboot2"]
+
+[dependencies]
+cfg-if = "1.0.0"
+multiboot2 = { version = "0.14.0", optional = true }

@@ -1,0 +1,5 @@
+/target
+*.iso
+isodir/
+qemu.log
+*.dump
