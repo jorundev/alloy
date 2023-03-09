@@ -3,3 +3,4 @@
 isodir/
 qemu.log
 *.dump
+.DS_Store

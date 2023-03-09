@@ -1,11 +1,12 @@
-ISO_MAKER?=GRUB
+BOOTLOADER?=GRUB
 
 include mk/config.mk
-ifeq ($(ISO_MAKER),GRUB)
+ifeq ($(BOOTLOADER),GRUB)
 include mk/grub.mk
-else ifeq ($(ISO_MAKER),limine)
+else ifeq ($(BOOTLOADER),limine)
+include mk/limine.mk
 else
-$(error Unknown iso maker: "$(ISO_MAKER)")
+$(error Unknown iso maker: "$(BOOTLOADER)")
 endif
 include mk/qemu.mk
 include mk/bootcore.mk
