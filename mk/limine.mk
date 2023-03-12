@@ -25,18 +25,19 @@ ifeq ($(shell which $(LIMINE_DEPLOY)),)
 $(error Could not find limine-deploy. Please provide the path to this file with LIMINE_DEPLOY)
 endif
 
+ISODIR=.tmp.dir.iso
+
 all: $(KERNEL_ISO)
 
-isodir:
-	mkdir -p isodir isodir/boot
+$(ISODIR):
+	mkdir -p $(ISODIR) $(ISODIR)/boot
 
-$(KERNEL_ISO): $(KERNEL_ELF) | isodir
-	cp res/limine/limine.cfg isodir/boot/limine.cfg
-	cp $(LIMINE_SYS) isodir/boot/limine.sys
-	cp $(LIMINE_CD) isodir/boot/limine-cd.bin
-	cp $(KERNEL_ELF) isodir/boot/kernel.elf
+$(KERNEL_ISO): $(KERNEL_ELF) | $(ISODIR)
+	cp res/limine/limine.cfg $(ISODIR)/boot/limine.cfg
+	cp $(LIMINE_SYS) $(ISODIR)/boot/limine.sys
+	cp $(LIMINE_CD) $(ISODIR)/boot/limine-cd.bin
+	cp $(KERNEL_ELF) $(ISODIR)/boot/kernel.elf
 	xorriso -as mkisofs -b /boot/limine-cd.bin \
 		-no-emul-boot -boot-load-size 3 -boot-info-table \
-		-o $(KERNEL_ISO) isodir
+		-o $(KERNEL_ISO) $(ISODIR)
 	$(LIMINE_DEPLOY) $(KERNEL_ISO)
-	$(RM) -r isodir

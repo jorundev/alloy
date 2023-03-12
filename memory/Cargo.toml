@@ -1,0 +1,11 @@
+[package]
+name = "memory"
+description = "memory code"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+x86 = []
+i386 = ["x86"]
+
+[dependencies]

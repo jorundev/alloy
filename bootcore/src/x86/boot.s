@@ -23,13 +23,18 @@ mb2start:
 mb2end:
 
 .section .text
-
 .global _start
 .type _start, @function
 _start:
+	lea	esp, boot_stack_top
 	push ebx
 	push eax
 	call boot
 halt:
 	hlt
 	jmp halt
+
+.section .bss, "aw", @nobits
+boot_stack_bottom:
+	.skip 4096
+boot_stack_top:

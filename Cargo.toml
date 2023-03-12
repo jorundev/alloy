@@ -7,9 +7,14 @@ edition = "2021"
 
 [workspace]
 members = [
-	"bootcore"
+	"bootcore",
+	"memory",
 ]
 
 [features]
 x86 = []
-i386 = ["x86"]
+i386 = ["x86", "memory/i386"]
+
+[dependencies]
+memory = { path = "memory" }
+bootcore = { path = "bootcore", features = ["multiboot2", "i386"]}

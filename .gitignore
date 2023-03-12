@@ -1,6 +1,6 @@
 /target
 *.iso
-isodir/
+.tmp.dir.*/
 qemu.log
 *.dump
 .DS_Store
