@@ -24,7 +24,7 @@ To build a fully bootable ISO, you will need:
 
 To get a simple ISO file with GRUB simply do `make` for the debug version
 
-To make a (faster) release build. Do
+To make a (faster and smaller) release build. Do
 
 `PROFILE=release make`
 
@@ -33,6 +33,10 @@ This will create an `alloy.iso` image in the root.
 If you wish to use limine as a bootloader, add `BOOTLOADER=limine` before the make invocation
 
 If you only wish to build the kernel ELF file, use the `elf`makefile rule. This will build the kernel in `target/i386-unknown-none/{debug or release}/alloy.elf`
+
+## Emulating
+
+Do `make qemu` (or `PROFILE=release make qemu` in release mode) to start qemu. You will need qemu-system.
 
 ## Known issues
 
