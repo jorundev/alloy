@@ -4,12 +4,15 @@ OUTPUT_FORMAT(elf32-i386)
 KERNEL_VBASE = 0xC0000000;
 
 SECTIONS {
+	. = 0;
+
 	.boot.multiboot : {
 		*(.boot.multiboot)
 	}
 
 	. = 1M;
 
+	. = ALIGN(0x1000);
 	.boot.text : {
 		*libbootcore*.a:*(.text .text.*);
 		. = ALIGN(0x1000);
@@ -27,9 +30,13 @@ SECTIONS {
 		. = ALIGN(0x1000);
 	}
 
-	. = ALIGN(0x1000);
 	.boot.bss : {
 		*libbootcore*.a:*(.bss .bss.*);
+		. = ALIGN(0x1000);
+	}
+
+	.boot.other : {
+		*libbootcore*.a:*(*);
 		. = ALIGN(0x1000);
 	}
 

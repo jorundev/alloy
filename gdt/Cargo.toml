@@ -1,0 +1,11 @@
+[package]
+name = "gdt"
+version = "0.1.0"
+edition = "2021"
+description = "x86 global descriptor table"
+
+[features]
+x86 = ["memory/x86"]
+
+[dependencies]
+memory = { path = "../memory" }

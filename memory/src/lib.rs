@@ -1,7 +1,49 @@
 #![no_std]
+#![allow(dead_code)]
 
-pub mod x86;
 pub mod utils;
+pub mod x86;
+
+pub trait MemoryArea {
+    fn start_address(&self) -> usize;
+    fn end_address(&self) -> usize;
+
+    fn len(&self) -> usize {
+        self.end_address() - self.start_address()
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
+pub struct Frame<const PAGE_SIZE: usize> {
+    pub number: usize,
+}
+
+impl<const PAGE_SIZE: usize> Frame<PAGE_SIZE> {
+    pub fn from_addr(address: PhysAddr) -> Self {
+        Frame {
+            number: address.as_raw() / PAGE_SIZE,
+        }
+    }
+
+    pub fn address(&self) -> PhysAddr {
+        PhysAddr(self.number * PAGE_SIZE)
+    }
+
+    pub fn as_ptr<T>(&self) -> *const T {
+        self.address().0 as *const T
+    }
+
+    pub fn as_mut_ptr<T>(&self) -> *mut T {
+        self.address().0 as *mut T
+    }
+}
+
+pub trait FrameAllocator<const PAGE_SIZE: usize> {
+    fn allocate_frame(&mut self) -> Option<Frame<PAGE_SIZE>>;
+    fn deallocate_frame(&mut self, frame: Frame<PAGE_SIZE>);
+}
+
+pub type Frame4K = Frame<0x1000>;
 
 pub trait Addr {
     fn as_raw(&self) -> usize;
@@ -20,7 +62,7 @@ pub trait Addr {
 
 #[repr(transparent)]
 #[derive(Debug, Clone, Copy)]
-pub struct PhysAddr(usize);
+pub struct PhysAddr(pub usize);
 
 impl PhysAddr {
     pub fn new(raw: usize) -> Self {
@@ -36,7 +78,7 @@ impl Addr for PhysAddr {
 
 #[repr(transparent)]
 #[derive(Debug, Clone, Copy)]
-pub struct VirtAddr(usize);
+pub struct VirtAddr(pub usize);
 
 impl VirtAddr {
     pub fn new(raw: usize) -> Self {

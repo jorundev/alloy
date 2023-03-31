@@ -9,6 +9,7 @@ edition = "2021"
 members = [
 	"bootcore",
 	"memory",
+	"gdt",
 ]
 
 [features]

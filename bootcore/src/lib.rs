@@ -1,11 +1,7 @@
 #![no_std]
-
-use core::panic::PanicInfo;
+#![feature(panic_info_message)]
 
 #[cfg(feature = "x86")]
 mod x86;
 
-#[panic_handler]
-fn panic(_: &PanicInfo) -> ! {
-    loop {}
-}
+mod panic;

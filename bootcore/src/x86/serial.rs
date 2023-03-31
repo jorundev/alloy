@@ -1,5 +1,5 @@
-use core::fmt::Write;
 use super::ports::outb;
+use core::fmt::Write;
 
 pub struct SerialOut;
 

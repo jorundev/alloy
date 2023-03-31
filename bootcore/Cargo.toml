@@ -10,11 +10,12 @@ crate-type = ["staticlib"]
 name = "bootcore"
 
 [features]
-x86 = []
+x86 = ["gdt/x86"]
 i386 = ["x86", "memory/i386"]
 multiboot2 = ["x86", "dep:multiboot2"]
 
 [dependencies]
 cfg-if = "1.0.0"
-multiboot2 = { version = "0.14.0", optional = true }
+multiboot2 = { version = "0.15.1", optional = true }
 memory = { path = "../memory" }
+gdt = { path = "../gdt" }

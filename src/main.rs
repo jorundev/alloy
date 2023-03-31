@@ -4,7 +4,9 @@
 use core::panic::PanicInfo;
 
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+#[no_mangle]
+unsafe fn alloy_panic(_info: &PanicInfo) -> ! {
+    core::ptr::write_volatile(0xb8000 as *mut u8, 'A' as u8);
     loop {}
 }
 
